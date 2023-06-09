@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Blog.app">
+    <meta name="author" content="Gregor Anželj">
+    <title>{% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+	<!-- FontAwesome icons -->
+	<link href="{{ url_for('static', filename='css/font-awesome.min.css') }}" rel="stylesheet">
+
+	<!-- Bootstrap 4 Toggle -->
+    <link href="{{ url_for('static', filename='css/bootstrap4-toggle.min.css') }}" rel="stylesheet">
+
+	<!-- Google fonts (Playfair Display, Ralewy) hosted on Google servers
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+	//-->
+
+    <!-- Custom styles for this template, including localy hosted Google fonts -->
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='favicon.ico') }}" rel="shortcut icon">
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light">
+  <a class="nav-link text-muted" href="/"><span class="fa fa-commenting"></span> Blog.app</a>
+</nav>
+
+<main role="main" class="container">
+
+  <header class="blog-header py-3">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+      <div class="col-2 d-flex justify-content-start align-items-center">
+        {% if user and user.loggedin %}
+        <a class="btn btn-outline-secondary" href="/post/add">Add</a>
+		{% endif %}
+      </div>
+      <div class="col-8 text-center">
+        <h1>Random Thoughts In My Head</h1>
+      </div>
+      <div class="col-2 d-flex justify-content-end align-items-center">
+        {% if user and user.loggedin %}
+		<div class="btn-group">
+		  <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="menu" data-toggle="dropdown" aria-expanded="false">
+			<span class="fa fa-user"></span> {{ user.firstname }}
+		  </a>
+		  <div class="dropdown-menu" aria-labelledby="menu">
+			{% if user.is_admin %}
+			<a class="dropdown-item" href="/admin">Administration</a>
+			{% endif %}
+			<a class="dropdown-item" href="/user/password">Change password</a>
+			<div class="dropdown-divider"></div>
+			<a class="dropdown-item" href="/logout">Sign out</a>
+		  </div>
+		</div>
+		{% else %}
+        <a class="btn btn-outline-secondary" href="/login">Sign in</a>
+		{% endif %}
+      </div>
+    </div>
+  </header>
+
+{% block content %}{% endblock %}
+
+</main><!-- /.container -->
+
+<footer class="blog-footer">
+  <p>»Random Thoughts In My Head« blog is written by <a href="https://github.com/anzeljg">@anzeljg</a>.</p>
+  <p>
+    <a href="#">Back to top</a>
+  </p>
+</footer>
+
+
+<script src="{{ url_for('static', filename='js/jquery-3.5.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/popper-1.16.0.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+
+<!-- Bootstrap 4 Toggle -->
+<script src="{{ url_for('static', filename='js/bootstrap4-toggle.min.js') }}"></script>
+
+{% block javascript %}
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Blog.app &middot; {{ title }}{% endblock %}
+
+{% block content %}
+	{% if data %}
+	<div class="blog-post p-4 p-md-5 bg-light">
+		<h2 class="blog-post-title font-italic">{{ data.title }}</h2>
+		<p class="blog-post-meta">Last change {{ data.updated.strftime('%d. %m. %Y') }}</p>
+		<div><strong>
+			{% for line in data.summary.split('\n') %}
+				<p>{{ line }}</p>
+			{% endfor %}
+		</strong></div>
+		<div>
+			{% for line in data.content.split('\n') %}
+				<p>{{ line }}</p>
+			{% endfor %}
+		</div>
+		<p>
+			<a href="/" class="btn btn-outline-secondary">Back</a>
+		</p>
+	</div>
+	{% endif %}
+{% endblock %}

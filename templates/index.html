@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Blog.app &middot; Index{% endblock %}
+
+{% block content %}
+	{% if data %}
+		{% for item in data %}
+			{% if loop.first %}
+			<div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+				<div class="col-md-12 px-0">
+					<h1 class="display-4 font-italic">{{ item.title }}</h1>
+					<p class="text-secondary">Written by {% if item.author %}{{ item.author.firstname }} {{ item.author.lastname }}{% else %}Anonymous{% endif %}. Last change {{ item.updated.strftime('%d. %m. %Y') }}</p>
+					<div class="lead my-3">
+					{% for line in item.summary.split('\n') %}
+						<p>{{ line }}</p>
+					{% endfor %}
+					</div>
+					<p class="lead mb-0"><a href="/post/view/{{ item.id }}" class="text-white font-weight-bold">Continue reading ...</a></p>
+					<p class="pull-right">
+						<a class="btn btn-outline-light" href="/post/edit/{{ item.id }}">Edit</a>
+						<a class="btn btn-outline-secondary" href="/post/delete/{{ item.id }}">Delete</a>
+					</p>
+				</div>
+			</div>
+			{% else %}
+			<div class="blog-post p-4 p-md-5 bg-light">
+				<h2 class="blog-post-title font-italic">{{ item.title }}</h2>
+				<p class="blog-post-meta">Written by {% if item.author %}{{ item.author.firstname }} {{ item.author.lastname }}{% else %}Anonymous{% endif %}. Last change {{ item.updated.strftime('%d. %m. %Y') }}</p>
+				<div>
+				{% for line in item.summary.split('\n') %}
+					<p>{{ line }}</p>
+				{% endfor %}
+				</div>
+				<p class="mt-2 mb-0"><a href="/post/view/{{ item.id }}">Continue reading ...</a></p>
+				<p class="pull-right pr-8">
+					<a class="btn btn-outline-primary" href="/post/edit/{{ item.id }}">Edit</a>
+					<a class="btn btn-outline-danger" href="/post/delete/{{ item.id }}">Delete</a>
+				</p>
+			</div>
+			{% endif %}
+		{% endfor %}
+	{% else %}
+		There are no blog posts yet. <a href="/post/add">Add</a> one.
+	{% endif %}
+{% endblock %}
